@@ -1,0 +1,33 @@
+.thumbnail #map {
+    width: 100%;
+    height: 500px;
+}
+
+.thumbnail {
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
+
+#delete-form {
+    display: inline;
+}
+
+#autocompleteSearch{
+  width: 250px;
+  margin-top: 8.5px;
+  display: none;
+}
+
+#visitButton{
+  margin-right: 15px;
+}
+#center {
+  margin: auto; 0;
+}
+#inlineHeader{
+  display: inline;
+  margin-right: 25px;
+}

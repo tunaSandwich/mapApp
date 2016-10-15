@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+<div class="container">
+  <header class="page-header">
+    <h1 id="inlineHeader">Add New Destination</h1>
+    <p id="inlineHeader">
+      Search map for a destination
+    </p>
+  </header>
+</div>
+
+  <form action="/user/<%= user._id %>/destination" method="POST">
+    <div class="form-group">
+        <input id="autocompleteSearch" class="form-control" type="text" name="name" placeholder="Search">'
+        <button id="visitButton" type="button" class="btn btn-success" >Visited Destination</button>
+        <button id="wishListButton" type="button" class="btn btn-warning">Destination Wishlist</button>
+    </div>
+  </form>
+
+
+<div class="container">
+  <div class="col-md-9">
+      <div class="thumbnail">
+        <div id="map"></div>
+      </div>
+      <a href="/user/<%=user._id%>">Go Back</a>
+
+  </div>
+    </div>
+
+
+<% include ../partials/footer %>
