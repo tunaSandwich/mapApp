@@ -10,14 +10,15 @@ var destinationSchema = new mongoose.Schema({
       ref: "photos"
     }
   ],
-  //watch video on how this works
-  // descriptions: String
-  descriptions: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Description"
-    }
-  ]
+  description: String,
+  owner: {
+    id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
+    username: String
+  },
+  created: {type: Date, default: Date.now}
   });
 
 module.exports = mongoose.model("Destination", destinationSchema);

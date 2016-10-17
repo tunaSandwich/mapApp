@@ -1,5 +1,4 @@
 // =======================================================
-//TODO Figure out a way to get the buttons in the infowindow and in the form thats connected to maps places!
 // Use places variable below to get geo data in database
 // =======================================================
 
@@ -57,11 +56,13 @@ $( function(){
     google.maps.event.addListener(searchBox, 'place_changed', function() {
         //TODO infowindow and marker are both being defined in this function.
         //write a conditional statement to check if infowindow is open and marker is on map
-        // infowindow.close();
-        //
-        // //clear out old marker
-        // marker.setMap(null);
-        // marker.setVisible(false);
+        if(infowindow !== undefined){
+          infowindow.close();
+          // //clear out old marker
+          marker.setMap(null);
+          marker.setVisible(false);
+          console.log("cleared out infowindow and marker");
+        }
 
         var place = searchBox.getPlace();
         console.log(place);
@@ -82,18 +83,20 @@ $( function(){
           position: place.geometry.location
         });
 
-        var visitedButton = '<button id="visitButton" class="btn btn-success" >Visited Destination</button>';
-        var wishilist =  '<button type="button" class="btn btn-warning">Destination Wishlist</button>';
-
-
-        contentString = '<div id="center" class="info-window">' +
-              '<h3>'+ place.name +'</h3>' +
-              '<p>I hear ' + place.name + ' is great! Have you been here before? Please make a selection:</p> '+
-              '</div>';
-
+        var html =
+        '<div id="formContainer" class="info-window">' +
+          '<h3>'+ place.name +'</h3>' +
+          '<p>I hear ' + place.name + ' is great! Have you been here before? Please make a selection:</p> '+
+          '<form action="/user/<%= user._id %>/destination" method="POST">'+
+              '<div class="form-group">'+
+                  '<button id="visitButton" type="button" class="btn btn-success" >Visited Destination</button>' +
+                  '<button id="wishListButton" type="button" class="btn btn-warning">Destination Wishlist</button>' +
+              '</div>' +
+            '</form>' +
+        '</div>';
 
         infowindow = new google.maps.InfoWindow({
-          content: contentString,
+          content: html,
           maxWidth: 400,
       });
 
