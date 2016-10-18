@@ -30,6 +30,12 @@ $( function(){
     var markerImage = "../images/dotIcon.png";
     var marker;
     var infowindow;
+  // Set markers from locations in database
+    var latLng = new google.maps.LatLng(40.74467899999999,-73.94854240000001);
+    marker = new google.maps.Marker({
+        position: latLng,
+        map: map
+      });
 
   //___________________________Autocomplete search______________________
 
@@ -113,6 +119,7 @@ $( function(){
           content: html,
           maxWidth: 400,
       });
+      infowindow.open(map, marker);
 
         marker.addListener('click', function() {
         infowindow.open(map, marker);

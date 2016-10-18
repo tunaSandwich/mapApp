@@ -1,4 +1,5 @@
 <% include ../partials/header %>
+
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -20,6 +21,11 @@
                 </div>
                 <hr>
                 <% user.destinations.forEach(function(destination){ %>
+                  <%= console.log(typeof destination.position); %>
+                  <%= console.log(destination.position); %>
+                  <% }) %>
+
+                <% user.destinations.forEach(function(destination){ %>
                     <div class="row">
                         <div class="col-md-12">
                             <strong><%= destination.name %></strong>
@@ -36,5 +42,5 @@
 </div>
 <input id="userID" value="<%=user._id%>" style="display: none" />
 
-
+<% include ../partials/homePageMap %>
 <% include ../partials/footer %>

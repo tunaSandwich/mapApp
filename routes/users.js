@@ -15,6 +15,8 @@ router.get("/:id", function(req, res){
         console.log(err);
       } else {
         console.log(user);
+        //Passing user into index ejs file!
+        //======================================
         res.render("users/index", {user: user});
       }
     });
@@ -54,7 +56,7 @@ router.post("/:id/new/destinations", function(req, res){
              //push the new destination into user schema
              user.destinations.push(destination);
              user.save();
-             
+
              req.flash("success", "Successfully added desitination");
              res.redirect('/' + user._id);
           }
