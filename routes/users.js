@@ -34,15 +34,14 @@ router.get("/:id/new", function(req, res){
 //CREATE - add destination to database
 //TODO make the post request
 router.post("/:id/new/destinations", function(req, res){
-  console.log(req.body.description);
-  //used req.params.id to get id from in :id.
+  // used req.params.id to get id from in :id.
   User.findById(req.params.id, function(err, user){
     if(err){
       console.log(err);
       res.redirect("/:id/new");
     } else{
       //Add Destination info to user
-        Destination.create(req.body.description, function(err, destination){
+        Destination.create(req.body.destination, function(err, destination){
            if(err){
                req.flash("error", "Something went wrong");
                console.log(err);
@@ -54,8 +53,8 @@ router.post("/:id/new/destinations", function(req, res){
              destination.save();
              //push the new destination into user schema
              user.destinations.push(destination);
-
              user.save();
+             
              req.flash("success", "Successfully added desitination");
              res.redirect('/' + user._id);
           }

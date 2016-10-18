@@ -31,3 +31,8 @@
   display: inline;
   margin-right: 25px;
 }
+.form-group #googleRes{
+border: none;
+width: 300px;
+
+}

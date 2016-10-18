@@ -6,9 +6,9 @@
 $( function(){
   function initMap(){
     var mapCanvas = document.getElementById("map");
-    var submitVisited = document.getElementById("visitButton");
-    var submitWishlist = document.getElementById("wishListButton");
-    console.log(submitVisited);
+    var userID = document.getElementById('userID').value;
+
+
     var location = new google.maps.LatLng(37.09024, -100.712891);
     var contentString;
 
@@ -87,13 +87,27 @@ $( function(){
         '<div id="formContainer" class="info-window">' +
           '<h3>'+ place.name +'</h3>' +
           '<p>I hear ' + place.name + ' is great! Have you been here before? Please make a selection:</p> '+
-          '<form action="/user/<%= user._id %>/destination" method="POST">'+
+          '<form action="/'+ userID +'/new/destinations" method="POST">'+
+          '<div class="form-group">'+
+                '<strong>Location:</strong> <input id="googleRes" type="text" name="destination[name]" value="'+ place.name +'"readonly></input>' +
+                '<strong>Position:</strong> <input id="googleRes" type="text" name="destination[position]" value="'+ place.geometry.location +'" readonly></input>' +
+              '</div>' +
               '<div class="form-group">'+
-                  '<button id="visitButton" type="button" class="btn btn-success" >Visited Destination</button>' +
-                  '<button id="wishListButton" type="button" class="btn btn-warning">Destination Wishlist</button>' +
+                  '<button id="wishListButton" type="submit" class="btn btn-warning">Save Location</button>' +
               '</div>' +
             '</form>' +
         '</div>';
+        // var html =
+        // '<div id="formContainer" class="info-window">' +
+        //   '<h3>'+ place.name +'</h3>' +
+        //   '<p>I hear ' + place.name + ' is great! Have you been here before? Please make a selection:</p> '+
+        //   '<form action="/user/<%= user._id %>/destination" method="POST">'+
+        //       '<div class="form-group">'+
+        //           '<button id="visitButton" type="button" class="btn btn-success" >Visited Destination</button>' +
+        //           '<button id="wishListButton" type="button" class="btn btn-warning">Destination Wishlist</button>' +
+        //       '</div>' +
+        //     '</form>' +
+        // '</div>';
 
         infowindow = new google.maps.InfoWindow({
           content: html,
