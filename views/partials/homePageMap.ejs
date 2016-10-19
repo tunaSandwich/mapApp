@@ -1,0 +1,71 @@
+<script type="text/javascript">
+function initMap(){
+  var mapCanvas = document.getElementById("map");
+  var userID = document.getElementById('userID').value;
+
+
+  var location = new google.maps.LatLng(37.99616268, -5.09765625);
+  var contentString;
+
+  var mapOptions = {
+    center: location,
+    zoom: 2,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    mapTypeControl: true,
+    mapTypeControlOptions: {
+      style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+      position: google.maps.ControlPosition.TOP_LEFT
+  }
+    };
+
+  //fire up map
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+
+  // Marker
+  var markerImage = "../images/dotIcon.png";
+  var marker;
+  var infowindow;
+
+// _______________Set markers from locations in database______________________
+<% user.destinations.forEach(function(destination){ %>
+  <%var positionStr = destination.position;%>
+  <%positionStr = positionStr.replace(/[()]/g, '');%>
+  <%var coordArr = positionStr.split(",");%>
+  <%var lat = parseFloat(coordArr[0]);%>
+  <%var lon = parseFloat(coordArr[1]);%>
+  var latLng = new google.maps.LatLng(<%=lat%>,<%=lon%>);
+  marker = new google.maps.Marker({
+      map: map,
+      icon: markerImage,
+      position: latLng,
+    });
+  var visitedForm =
+  '<div id="formContainer" class="info-window">' +
+    '<h3> <%= destination.name %></h3>' +
+    '<div class="form-group">'+
+        '<strong>Location:</strong> <input id="googleRes" type="text" name="destination[name]" value="<%= destination.name %>"readonly></input>' +
+        '<strong>Position:</strong> <input id="googleRes" type="text" name="destination[position]" value="<%= destination.position %>" readonly></input>' +
+    '</div>' +
+    '<form action="/<%= user._id %>/<%= destination._id %>?_method=DELETE" method="POST">'+
+        '<div class="form-group">'+
+            '<button class="btn btn-xl btn-danger">Delete</button>' +
+        '</div>' +
+      '</form>' +
+  '</div>';
+
+  infowindow = new google.maps.InfoWindow({
+      maxWidth: 400,
+  });
+  google.maps.event.addListener(marker,'click',(function(marker,visitedForm,infowindow){
+        return function() {
+           infowindow.close();
+           infowindow.setContent(visitedForm);
+           infowindow.open(map,marker);
+        };
+    })(marker,visitedForm,infowindow));
+
+  <% }) %>
+
+}
+initMap();
+</script>
