@@ -47,6 +47,6 @@ app.use("/", indexRoutes);
 app.use("/", userRoutes);
 
 
-app.listen(3000, function(){
+app.listen(process.env.PORT, process.env.IP, function(){
    console.log("The MapApp Server Has Started on port: " + 3000);
 });

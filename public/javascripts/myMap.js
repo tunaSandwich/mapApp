@@ -103,17 +103,6 @@ $( function(){
               '</div>' +
             '</form>' +
         '</div>';
-        // var html =
-        // '<div id="formContainer" class="info-window">' +
-        //   '<h3>'+ place.name +'</h3>' +
-        //   '<p>I hear ' + place.name + ' is great! Have you been here before? Please make a selection:</p> '+
-        //   '<form action="/user/<%= user._id %>/destination" method="POST">'+
-        //       '<div class="form-group">'+
-        //           '<button id="visitButton" type="button" class="btn btn-success" >Visited Destination</button>' +
-        //           '<button id="wishListButton" type="button" class="btn btn-warning">Destination Wishlist</button>' +
-        //       '</div>' +
-        //     '</form>' +
-        // '</div>';
 
         infowindow = new google.maps.InfoWindow({
           content: html,
