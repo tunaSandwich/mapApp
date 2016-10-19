@@ -1,16 +1,9 @@
 var mongoose = require("mongoose");
 
 var destinationSchema = new mongoose.Schema({
-  //lat and lon
-  //===========
   name: String,
   position: String,
-  images: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "photos"
-    }
-  ],
+  images: String,
   description: String,
   owner: {
     id: {

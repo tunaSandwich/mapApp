@@ -9,35 +9,31 @@
                 <li class="list-group-item">Vistied Destinations</li>
                 <li class="list-group-item">Destination Watchlist</li>
             </div>
-            <a class="btn btn-success" href="/<%= currentUser._id %>/new">Add New Location</a>
+            <a class="btn btn-success" href="/<%= user._id %>/new">Add New Location</a>
         </div>
         <div class="col-md-9">
             <div class="thumbnail">
               <div id="map"></div>
             </div>
-            <div class="well">
-                <div class="text-right">
-                    <h4>Your Destinations</h4>
-                </div>
-                <hr>
-                <% user.destinations.forEach(function(destination){ %>
-                  <%= console.log(typeof destination.position); %>
-                  <%= console.log(destination.position); %>
-                  <% }) %>
 
-                <% user.destinations.forEach(function(destination){ %>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <strong><%= destination.name %></strong>
-                            <span class="pull-right">10 days ago</span>
-                            <p>
-                                <%= destination.text %>
-                            </p>
-                        </div>
-                    </div>
-                <% }) %>
-            </div>
-        </div>
+            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+               <% user.destinations.forEach(function(destination){ %>
+                   <div class="col-md-3 col-sm-6">
+                       <div class="thumbnail">
+                          <%= destination.photos %>
+                          <div class="caption">
+                              <h4><%= destination.name %></h4>
+                          </div>
+                          <p>
+                            <%= console.log(destination._id); %>
+                            <form id="delete-form" action="<%= user._id %>/<%= destination._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-xs btn-danger">Delete</button>
+                            </form>
+                          </p>
+                       </div>
+                   </div>
+               <% }); %>
+           </div>
     </div>
 </div>
 <input id="userID" value="<%=user._id%>" style="display: none" />

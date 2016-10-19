@@ -6,18 +6,12 @@ var express     = require("express"),
     passport    = require("passport"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    Campground  = require("./models/campground"),
-    Comment     = require("./models/comment"),
-    Description = require("./models/description"),
     Destination = require("./models/destination"),
-    Photos      = require("./models/photos"),
     User        = require("./models/user"),
     seedDB      = require("./seeds");
 
 //requiring routes
-var commentRoutes    = require("./routes/comments"),
-    campgroundRoutes = require("./routes/campgrounds"),
-    indexRoutes      = require("./routes/index"),
+var indexRoutes      = require("./routes/index"),
     userRoutes       = require("./routes/users");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/mappingMe";
@@ -32,7 +26,7 @@ app.use(flash());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Dont know what this is!",
+    secret: "Grant access to session!",
     resave: false,
     saveUninitialized: false
 }));
@@ -50,8 +44,6 @@ app.use(function(req, res, next){
 });
 
 app.use("/", indexRoutes);
-app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/", userRoutes);
 
 

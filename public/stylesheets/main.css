@@ -33,6 +33,25 @@
 }
 .form-group #googleRes{
 border: none;
-width: 300px;
+display: inline-block;
+}
+#hidden{
+  display: none;
+}
+#banner{
+  padding: 0px;
+  margin-top: -25px;
+  position: fixed;
 
+}
+#banner #bannerImage{
+}
+#banner #bannerText{
+  position: absolute;
+  z-index: 999;
+}
+.container #head{
+  position: fixed;
+  top: 150px;
+  margin: 0 auto;
 }

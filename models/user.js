@@ -10,26 +10,7 @@ var UserSchema = new mongoose.Schema({
       ref: "Destination"
     }
   ],
-    photos: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "photos"
-
-      }
-    ],
-      visitedDestination: [
-        {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "destinations"
-      }
-    ],
-      indetendedDestinations: [
-        {
-        type:mongoose.Schema.Types.ObjectId,
-        ref: "destinations"
-      }
-    ],
-    created: {type: Date, default: Date.now}
+    created: {type: Date, default: Date.now},
 });
 
 UserSchema.plugin(passportLocalMongoose);

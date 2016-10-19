@@ -3,18 +3,16 @@ var router  = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware");
-var Description = require("../models/description");
 var Destination = require("../models/destination");
 
 
 //User profile
-router.get("/:id", function(req, res){
+router.get("/:id", middleware.isLoggedIn, function(req, res){
   User.findById(req.params.id).populate("destinations").exec(
     function(err, user){
       if(err){
         console.log(err);
       } else {
-        console.log(user);
         //Passing user into index ejs file!
         //======================================
         res.render("users/index", {user: user});
@@ -23,7 +21,7 @@ router.get("/:id", function(req, res){
 });
 
 //NEW Show New  destination form
-router.get("/:id/new", function(req, res){
+router.get("/:id/new", middleware.isLoggedIn, function(req, res){
   User.findById(req.params.id, function(err, user){
     if(err){
       console.log(err);
@@ -35,7 +33,7 @@ router.get("/:id/new", function(req, res){
 
 //CREATE - add destination to database
 //TODO make the post request
-router.post("/:id/new/destinations", function(req, res){
+router.post("/:id/new/destinations", middleware.isLoggedIn, function(req, res){
   // used req.params.id to get id from in :id.
   User.findById(req.params.id, function(err, user){
     if(err){
@@ -61,13 +59,19 @@ router.post("/:id/new/destinations", function(req, res){
              res.redirect('/' + user._id);
           }
           });
-      //req.body is everything sent from form.
-      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-      //TODO make sure visitedDestinations and destinationWishlist gets populated in user!!
-      //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     }
   });
 });
 
+//Destroy Destination
+router.delete("/:id/:destinationId", middleware.isLoggedIn, function(req, res){
+  Destination.findByIdAndRemove(req.params.destinationId, function(err){
+    if(err){
+      res.redirect("/" + req.params.id);
+    } else{
+      res.redirect("/" + req.params.id);
+    }
+  });
+});
 
 module.exports = router;
