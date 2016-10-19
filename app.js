@@ -14,7 +14,9 @@ var indexRoutes      = require("./routes/index"),
     userRoutes       = require("./routes/users");
 
 var url = process.env.DATABASEURL || "mongodb://localhost/mappingMe";
-mongoose.connect(url);
+//mongodb://tunaSandwich:aldebaran3910@ds061506.mlab.com:61506/mymapapp
+// mongoose.connect(url);
+mongoose.connect("mongodb://tunaSandwich:Aldebaran3910@ds061506.mlab.com:61506/mymapapp");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
