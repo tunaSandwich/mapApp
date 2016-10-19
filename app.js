@@ -13,17 +13,18 @@ var express     = require("express"),
 var indexRoutes      = require("./routes/index"),
     userRoutes       = require("./routes/users");
 
-console.log(process.env.DATABASEURL);
+var port = process.env.PORT || 8080;
+
 // I ran export DATABASEURL=mongodb://localhost/mappingMe in the terminal
 //to have access to my local database
 //==========================================================================
-// then I ran heroku
-//config:set DATABASEURL=mongodb://tunaSandwich:aldebaran3910@ds061506.mlab.com:61506/mymapapp
+// then I ran
+//heroku config:set DATABASEURL=mongodb://tunaSandwich:aldebaran3910@ds061506.mlab.com:61506/mymapapp
 //in terminal so that process.env.DATABASEURL is referencing correct database
 //==========================================================================
 
 var url = process.env.DATABASEURL || "mongodb://localhost/mappingMe";
-mongoose.connect( process.env.DATABASEURL);
+mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
@@ -54,6 +55,6 @@ app.use("/", indexRoutes);
 app.use("/", userRoutes);
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
-   console.log("The MapApp Server Has Started on port: " + 3000);
+app.listen(port, process.env.IP, function(){
+   console.log("The MapApp Server Has Started on port: " + port);
 });
