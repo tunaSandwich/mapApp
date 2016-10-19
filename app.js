@@ -48,5 +48,5 @@ app.use("/", userRoutes);
 
 
 app.listen(3000, function(){
-   console.log("The YelpCamp Server Has Started on port: " + 3000);
+   console.log("The MapApp Server Has Started on port: " + 3000);
 });

@@ -55,3 +55,6 @@ display: inline-block;
   top: 150px;
   margin: 0 auto;
 }
+#addBtn{
+  margin-bottom: 25px;
+}

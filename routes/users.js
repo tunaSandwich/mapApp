@@ -22,11 +22,12 @@ router.get("/:id", middleware.isLoggedIn, function(req, res){
 
 //NEW Show New  destination form
 router.get("/:id/new", middleware.isLoggedIn, function(req, res){
-  User.findById(req.params.id, function(err, user){
-    if(err){
-      console.log(err);
-    } else {
-      res.render("destinations/new", {user: user});
+  User.findById(req.params.id).populate("destinations").exec(
+    function(err, user){
+      if(err){
+        console.log(err);
+      } else {
+        res.render("destinations/new", {user: user});
     }
   });
 });

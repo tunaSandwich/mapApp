@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>YelpCamp</title>
+        <title>MapApp</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="/stylesheets/main.css">
@@ -15,9 +15,9 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <% if (!currentUser){ %>
-                  <a class="navbar-brand" href="/">YelpCamp</a>
+                  <a class="navbar-brand" href="/">MapApp</a>
                   <% } else { %>
-                  <a class="navbar-brand" href="/<%= currentUser._id %>">YelpCamp</a>
+                  <a class="navbar-brand" href="/<%= currentUser._id %>">MapApp</a>
                 <% }; %>
             </div>
             <div class="collapse navbar-collapse">
