@@ -10,6 +10,12 @@ var UserSchema = new mongoose.Schema({
       ref: "Destination"
     }
   ],
+  friends: [
+    {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }
+],
     created: {type: Date, default: Date.now},
 });
 

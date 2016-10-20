@@ -40,11 +40,9 @@ display: inline-block;
 }
 #banner{
   padding: 0px;
-  margin-top: -25px;
+  margin-top: -10px;
   position: fixed;
 
-}
-#banner #bannerImage{
 }
 #banner #bannerText{
   position: absolute;
@@ -53,8 +51,8 @@ display: inline-block;
 .container #head{
   position: fixed;
   top: 150px;
-  margin: 0 auto;
+  left: 15%;
 }
-#addBtn{
-  margin-bottom: 25px;
+#noPadding{
+  padding: 0;
 }
