@@ -7,16 +7,51 @@
               <div class="col-md-3">
 
                   <p class="lead"><%=user.username%></p>
+
                   <% if(currentUser !== undefined){ %>
+                    <!-- IF THIS IS NOT SIGNED IN USERS PAGE -->
                     <% if(user._id.toString() !== currentUser._id.toString()){%>
-                      <!--  If this is another friends page AND this is not your friend The render: -->
-                      <form action="/<%=user._id%>/addfriend" method="POST">
-                        <div class="form-group">
-                          <input class="btn  btn-primary btn-block form-control" type="submit" value="Add Friend">
-                        </div>
-                      </form>
-                      <!-- ============================================================================ -->
+                        <%var userID = user._id;%>
+                        <%var currentUserID = currentUser._id;%>
+                        <%console.log("");%>
+                        <%console.log("+++++++++++++++++++CURRENT USER ID");%>
+                        <%console.log(currentUserID);%>
+                        <%console.log("");%>
+
+                    <!-- Function that checks whether a currentuser is already following user-->
+                        <%function isFriend(allFriendArr){%>
+                          <%var friends = false;%>
+                          <%if(allFriendArr.length > 0){%>
+                            <%for(var i=0 ; i< allFriendArr.length;i++){%>
+                              <%console.log(allFriendArr[i]);%>
+                              <%if(allFriendArr[i].toString() === userID.toString()){%>
+                                <%friends = true;%>
+                              <%}%>
+                            <%}};%>
+                            <%if(friends){%>
+                              <!-- Code to show Following -->
+                              <form id="unfollowFriend" action="<%= currentUserID %>/unfollow/<%= userID %>?_method=DELETE" method="POST">
+                                  <button class="btn btn-primary btn-block disabled form-control" >Unfollow</button>
+                              </form>
+                              <!-- ============================================================================ -->
+                              <%console.log("---------------->Already Connected");%>
+
+                            <%} else{%>
+                              <!-- Code that shows Add friend button -->
+                              <!--  If this is another friends page AND this is not your friend The render: -->
+                              <form action="/<%=userID%>/addfriend" method="POST">
+                                <div class="form-group">
+                                  <input class="btn btn-primary btn-block form-control" type="submit" value="Follow">
+                                </div>
+                              </form>
+                              <%console.log("---------------->Not friends yet Connected");%>
+                              <!-- ============================================================================ -->
+                        <%}}%>
+                        <%console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^TEST ON currentUser");%>
+                        <%isFriend(currentUser.friends);%>
+
                     <%} else { %>
+                      <!--  IF THIS IS YOUR PAGE THEN SHOW ADD NEW LOCATION BUTTON-->
                       <a class="btn btn-success btn-block form-control" href="/<%= user._id %>/new">Add New Location</a>
                   <% }} %>
 

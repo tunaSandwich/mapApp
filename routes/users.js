@@ -5,7 +5,6 @@ var User = require("../models/user");
 var middleware = require("../middleware");
 var Destination = require("../models/destination");
 var mongoose    = require("mongoose");
-var deepPopulate= require("mongoose-deep-populate")(mongoose);
 
 
 //TESTING deepPopulate
@@ -22,11 +21,6 @@ router.get("/:id", function(req, res){
       if(err){
         console.log(err);
       } else {
-        console.log(user);
-        console.log("=============================================");
-        console.log("USER FRIENDS");
-        console.log(user.friends);
-        console.log("=============================================");
         //Passing user into index ejs file!
         //======================================
         //Populate destination array in friends
@@ -34,26 +28,6 @@ router.get("/:id", function(req, res){
       }
     });
 });
-
-// //User profile
-// router.get("/:id", function(req, res){
-//   User.findById(req.params.id)
-//   .populate("destinations")
-//   .populate("friends")
-//   .populate("friends.destinations")
-//   .exec(
-//     function(err, user){
-//       if(err){
-//         console.log(err);
-//       } else {
-//         //Passing user into index ejs file!
-//         //======================================
-//         //Populate destination array in friends
-//         console.log(user);
-//         res.render("users/index", {user: user});
-//       }
-//     });
-// });
 
 //NEW Show New  destination form
 router.get("/:id/new", middleware.isLoggedIn, function(req, res){
@@ -76,10 +50,6 @@ router.post("/:id/addfriend", middleware.isLoggedIn, function(req, res){
     } else{
       //Add req.params.id 's id to friends array
       user.friends.push(req.params.id);
-      console.log("==========currentUser==========");
-      console.log(user);
-      console.log("==========new friend's idr==========");
-      console.log(req.params);
       user.save();
       req.flash("success", "Successfully followed ");
       res.redirect("/" + user._id);
@@ -117,6 +87,24 @@ router.post("/:id/new/destinations", middleware.isLoggedIn, function(req, res){
           });
     }
   });
+});
+
+//Destroy Followed Friend
+router.delete("/:id/unfollow/:friendID", middleware.isLoggedIn, function(req, res){
+  //TODO
+  //NOT DELETING FRIEND FROM USER BUT GETTING SUCCESS MESSAGE
+  User.update(
+    { _id: req.params.id }, { $pull: { friends : req.params.friendID } }, function(err){
+      if(err){
+        console.log(err);
+        req.flash("error", "Unable to unfollow user for some odd reason that I cannot explain");
+        res.redirect("/" + req.params.id);
+      } else {
+        req.flash("success", "Successfully unfollowed user");
+        res.redirect("/" + req.params.friendID);
+      }
+    }
+  );
 });
 
 //Destroy Destination
