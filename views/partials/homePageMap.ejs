@@ -66,6 +66,55 @@ function initMap(){
 
   <% }) %>
 
+
+//========================USER'S FRIENDS BUTTON=========================================================
+//===================================================================================================
+var friendList = document.getElementById('friendList');
+  <%user.friends.forEach(function(friend){%>
+      //define array to hold markers of specific friend
+      var arr<%=friend._id%> = [];
+      $("#friendList").append('<button id="friendID<%=friend._id%>" class="btn btn-default toggleFriend" type="submit"><%= friend.username %></button>');
+      document.getElementById('friendID<%=friend._id%>').addEventListener("click", function(){
+          $('#friendID<%=friend._id%>').toggleClass('active');
+          //Check if markers are on page or not
+          if($('#friendID<%=friend._id%>').hasClass('markerStatus')){
+            //Remove from map
+            //Set markers in array equal to null
+            console.log("arr<%=friend._id%>");
+            for (var i = 0; i < arr<%=friend._id%>.length; i++ ) {
+              arr<%=friend._id%>[i].setMap(null);
+            }
+            $('#friendID<%=friend._id%>').removeClass('markerStatus');
+          } else{
+            //Add markers to map
+            <%friend.destinations.forEach(function(destination){%>
+              <%if(friend.destinations){%>
+                <%console.log("DESTINATION POSITION")%>
+                <%console.log(destination.position)%>
+                <%var positionStr = destination.position;%>
+                <%positionStr = positionStr.replace(/[()]/g, '');%>
+                <%var coordArr = positionStr.split(",");%>
+                //Set variables equal to coordinates in frontend then add all of the
+                //maps stuff in ejs
+                var lat = <%=parseFloat(coordArr[0]);%>;
+                var lon = <%=parseFloat(coordArr[1]);%>;
+                var latLng = new google.maps.LatLng(lat, lon);
+                // Marker
+                var markerImage = "../images/bluedot.png";
+                marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    icon: markerImage,
+                  });
+                arr<%=friend._id%>.push(marker);
+                console.log("arr<%=friend._id%>");
+            <%}});%>
+            $('#friendID<%=friend._id%>').addClass('markerStatus');
+          }
+        });
+  <% });%>
+
+
 }
 initMap();
 </script>

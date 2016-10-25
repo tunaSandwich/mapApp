@@ -4,21 +4,56 @@ var passport = require("passport");
 var User = require("../models/user");
 var middleware = require("../middleware");
 var Destination = require("../models/destination");
+var mongoose    = require("mongoose");
+var deepPopulate= require("mongoose-deep-populate")(mongoose);
 
 
-//User profile
+//TESTING deepPopulate
 router.get("/:id", function(req, res){
-  User.findById(req.params.id).populate("destinations").populate("friends").exec(
+  User.findById(req.params.id)
+  .populate("destinations")
+  .populate("friends")
+  .populate({
+    path: "friends",
+    populate: { path: "destinations", select: "position", model: Destination } // <--- specify the model explicitly
+  })
+  .exec(
     function(err, user){
       if(err){
         console.log(err);
       } else {
+        console.log(user);
+        console.log("=============================================");
+        console.log("USER FRIENDS");
+        console.log(user.friends);
+        console.log("=============================================");
         //Passing user into index ejs file!
         //======================================
+        //Populate destination array in friends
         res.render("users/index", {user: user});
       }
     });
 });
+
+// //User profile
+// router.get("/:id", function(req, res){
+//   User.findById(req.params.id)
+//   .populate("destinations")
+//   .populate("friends")
+//   .populate("friends.destinations")
+//   .exec(
+//     function(err, user){
+//       if(err){
+//         console.log(err);
+//       } else {
+//         //Passing user into index ejs file!
+//         //======================================
+//         //Populate destination array in friends
+//         console.log(user);
+//         res.render("users/index", {user: user});
+//       }
+//     });
+// });
 
 //NEW Show New  destination form
 router.get("/:id/new", middleware.isLoggedIn, function(req, res){
