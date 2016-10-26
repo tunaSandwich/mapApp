@@ -1,0 +1,15 @@
+<% include partials/header %>
+<div id="banner" class="container">
+  <div id="head">
+    <h1>Search Results</h1>
+    <h4>
+      <%for(i=0;i<results.length;i++){%>
+        <%=results[i].username;%> <br />
+      <%}%>
+    </h4>
+  </div>
+
+</div>
+
+
+<% include partials/footer %>

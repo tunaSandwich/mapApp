@@ -17,7 +17,6 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
     var newUser = new User({username: req.body.username, firstName: req.body.firstName, lastName: req.body.lastName});
     var newUserId = newUser._id;
-    console.log(req.body.password);
     User.register(newUser, req.body.password, function(err, user){
         if(err){
             req.flash("error", err.message);
@@ -49,6 +48,22 @@ router.get("/logout", function(req, res){
    res.redirect("/");
 });
 
+//query search route
+router.post("/search", function(req, res){
+  //TODO figure out how to move search input value to GET route
+  var searchInput = req.body.searchInput;
+  res.redirect("/search/" + searchInput);
+});
 
+router.get("/search/:searchInput", function(req, res){
+  var searchInput = req.params.searchInput;
+  User.find(
+    { $text : {$search : searchInput} },
+    { score : {$meta : "textScore"}})
+    .sort({ score : {$meta : "textScore"}})
+    .exec(function(err, results) {
+      res.render("searchResults", {results: results});
+    });
+});
 
 module.exports = router;

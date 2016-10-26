@@ -21,6 +21,8 @@ var UserSchema = new mongoose.Schema({
     created: {type: Date, default: Date.now},
 });
 
+UserSchema.index({username: "text",firstName: "text", lastName: "text"});
+
 UserSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", UserSchema);
