@@ -9,24 +9,27 @@ var mongoose    = require("mongoose");
 
 // deepPopulate destinations of friends
 router.get("/:id", function(req, res){
-  User.findById(req.params.id)
-  .populate("destinations")
-  .populate("friends")
-  .populate({
-    path: "friends",
-    populate: { path: "destinations", select: "position", model: Destination } // <--- specify the model explicitly
-  })
-  .exec(
-    function(err, user){
-      if(err){
-        console.log(err);
-      } else {
-        //Passing user into index ejs file!
-        //======================================
-        //Populate destination array in friends
-        res.render("users/index", {user: user});
-      }
-    });
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+  // Yes, it's a valid ObjectId, proceed with `findById` call.
+    User.findById(req.params.id)
+    .populate("destinations")
+    .populate("friends")
+    .populate({
+      path: "friends",
+      populate: { path: "destinations", select: "position", model: Destination } // <--- specify the model explicitly
+    })
+    .exec(
+      function(err, user){
+        if(err){
+          console.log(err);
+        } else {
+          //Passing user into index ejs file!
+          //======================================
+          //Populate destination array in friends
+          res.render("users/index", {user: user});
+        }
+      });
+    }
 });
 
 //NEW Show New  destination form
