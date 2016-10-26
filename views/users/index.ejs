@@ -9,6 +9,7 @@
                   <p class="lead"><%=user.username%></p>
 
                   <% if(currentUser !== undefined){ %>
+
                     <!-- IF THIS IS NOT SIGNED IN USERS PAGE -->
                     <% if(user._id.toString() !== currentUser._id.toString()){%>
                         <%var userID = user._id;%>

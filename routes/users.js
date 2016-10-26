@@ -7,7 +7,7 @@ var Destination = require("../models/destination");
 var mongoose    = require("mongoose");
 
 
-//TESTING deepPopulate
+// deepPopulate destinations of friends
 router.get("/:id", function(req, res){
   User.findById(req.params.id)
   .populate("destinations")

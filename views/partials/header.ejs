@@ -20,6 +20,14 @@
                   <% } else { %>
                   <a class="navbar-brand" href="/<%= currentUser._id %>">MapApp</a>
                 <% }; %>
+                <form class="navbar-form navbar-left">
+                  <div class="form-group">
+                    <input type="search" class="form-control" placeholder="Find Friends">
+                  </div>
+                  <button type="submit" class="btn btn-default">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </button>
+                </form>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
