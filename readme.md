@@ -1,8 +1,7 @@
 BUGS TO FIX
 
 homePageMap.ejs
-• Hide delete button if current user is not on page
-  • Create middleware to only allow owner of destination to delete button
+  • Create middleware to only allow owner of destination to delete button (Button is already hidden)
 
 landing.ejs
 • Fix backround image on landing page so flash message doesnt push background image down
