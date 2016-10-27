@@ -15,10 +15,12 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
                 <% if (!currentUser){ %>
-                  <a class="navbar-brand" href="/">MapApp</a>
+                  <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>MapApp</a>
                   <% } else { %>
-                  <a class="navbar-brand" href="/<%= currentUser._id %>">MapApp</a>
+                  <a class="navbar-brand" href="/<%= currentUser._id %>"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> MapApp</a>
                 <% }; %>
                 <form  class="navbar-form navbar-left" action="/search" method="POST">
                   <div class="form-group">
@@ -29,13 +31,16 @@
                   </button>
                 </form>
             </div>
+          </ul>
+        </div>
+
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <% if(!currentUser){ %>
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">Sign Up</a></li>
                     <% } else { %>
-                        <li><a href="#">Signed In As <%= currentUser.username %></a></li>
+                        <li class=""><a href="/<%= currentUser._id %>"><%= currentUser.firstName + " " + currentUser.lastName %> <span class="sr-only"></span></a></li>
                         <li><a href="/logout">Logout</a></li>
                     <% } %>
                 </ul>

@@ -4,93 +4,15 @@
     <div class="row">
         <div class="container">
           <div class="row">
-              <div class="col-md-3">
+            <% include ./homePageLeftCulumn %>
 
-                  <p class="lead"><%=user.username%></p>
-
-                  <% if(currentUser !== undefined){ %>
-
-                    <!-- IF THIS IS NOT SIGNED IN USERS PAGE -->
-                    <% if(user._id.toString() !== currentUser._id.toString()){%>
-                        <%var userID = user._id;%>
-                        <%var currentUserID = currentUser._id;%>
-                        <%console.log("");%>
-                        <%console.log("+++++++++++++++++++CURRENT USER ID");%>
-                        <%console.log(currentUserID);%>
-                        <%console.log("");%>
-
-                    <!-- Function that checks whether a currentuser is already following user-->
-                        <%function isFriend(allFriendArr){%>
-                          <%var friends = false;%>
-                          <%if(allFriendArr.length > 0){%>
-                            <%for(var i=0 ; i< allFriendArr.length;i++){%>
-                              <%console.log(allFriendArr[i]);%>
-                              <%if(allFriendArr[i].toString() === userID.toString()){%>
-                                <%friends = true;%>
-                              <%}%>
-                            <%}};%>
-                            <%if(friends){%>
-                              <!-- Code to show Following -->
-                              <form id="unfollowFriend" action="<%= currentUserID %>/unfollow/<%= userID %>?_method=DELETE" method="POST">
-                                  <button class="btn btn-primary btn-block disabled form-control" >Unfollow</button>
-                              </form>
-                              <!-- ============================================================================ -->
-                              <%console.log("---------------->Already Connected");%>
-
-                            <%} else{%>
-                              <!-- Code that shows Add friend button -->
-                              <!--  If this is another friends page AND this is not your friend The render: -->
-                              <form action="/<%=userID%>/addfriend" method="POST">
-                                <div class="form-group">
-                                  <input class="btn btn-primary btn-block form-control" type="submit" value="Follow">
-                                </div>
-                              </form>
-                              <%console.log("---------------->Not friends yet Connected");%>
-                              <!-- ============================================================================ -->
-                        <%}}%>
-                        <%console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^TEST ON currentUser");%>
-                        <%isFriend(currentUser.friends);%>
-
-                    <%} else { %>
-                      <!--  IF THIS IS YOUR PAGE THEN SHOW ADD NEW LOCATION BUTTON-->
-                      <a class="btn btn-success btn-block form-control" href="/<%= user._id %>/new">Add New Location</a>
-                  <% }} %>
-
-                  <div class="list-group">
-                          <div class="caption">
-                            <h3> Friends' Maps</h3>
-
-                            <ul id="friendList" class="list-group friendList"></ul>
-                      </div>
-                    </div>
-
-              </div>
         <div class="col-md-9">
             <div class="thumbnail">
               <div id="map"></div>
             </div>
-
-            <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-               <% user.destinations.forEach(function(destination){ %>
-                   <div class="col-md-3 col-sm-6">
-                       <div class="thumbnail">
-                          <%= destination.photos %>
-                          <div class="caption">
-                              <h4><%= destination.name %></h4>
-                          </div>
-                          <p>
-                            <form id="delete-form" action="<%= user._id %>/delete/<%= destination._id %>?_method=DELETE" method="POST">
-                                <button class="btn btn-xs btn-danger">Delete</button>
-                            </form>
-                          </p>
-                       </div>
-                   </div>
-               <% }); %>
-           </div>
     </div>
 </div>
 <input id="userID" value="<%=user._id%>" style="display: none" />
 
-<% include ../partials/homePageMap %>
-<% include ../partials/friendsLocation.ejs %>
+<% include ./homePageMap %>
 <% include ../partials/footer %>

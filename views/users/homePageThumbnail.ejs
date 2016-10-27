@@ -1,0 +1,19 @@
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+   <% user.destinations.forEach(function(destination){ %>
+       <div class="col-md-3 col-sm-6">
+           <div class="thumbnail">
+              <%= destination.photos %>
+              <div class="caption">
+                  <h4><%= destination.name %></h4>
+              </div>
+              <p>
+                <%if(user._id.toString() === currentUser._id.toString()){%>
+                  <form id="delete-form" action="<%= user._id %>/delete/<%= destination._id %>?_method=DELETE" method="POST">
+                      <button class="btn btn-xs btn-danger">Delete</button>
+                  </form>
+                <%}%>
+              </p>
+           </div>
+       </div>
+   <% }); %>
+</div>

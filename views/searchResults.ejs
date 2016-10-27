@@ -1,15 +1,27 @@
 <% include partials/header %>
-<div id="banner" class="container">
-  <div id="head">
-    <h1>Search Results</h1>
-    <h4>
-      <%for(i=0;i<results.length;i++){%>
-        <%=results[i].username;%> <br />
-      <%}%>
-    </h4>
-  </div>
+<div id="head">
+  <div class="container">
 
+    <div class="panel panel-default">
+      <!-- Default panel contents -->
+      <div class="panel-heading">Search Results</div>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Username</th>
+        </tr>
+        <%for(i=0;i<results.length;i++){%>
+          <tr>
+            <th><a href="/<%= results[i]._id %>"> <%= results[i].firstName + " " + results[i].lastName %> </a></th>
+            <th><a href="/<%= results[i]._id %>"> <%= results[i].username; %> </a> <br /></th>
+          </tr>
+        <%}%>
+
+      </table>
+    </div>
+  </div>
 </div>
+
 
 
 <% include partials/footer %>

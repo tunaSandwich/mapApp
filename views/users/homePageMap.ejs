@@ -39,19 +39,27 @@ function initMap(){
       icon: markerImage,
       position: latLng,
     });
+    //TODO Add code to visitedForm. Need to stop showing delete button for visiting users
+    // if(user._id.toString() === currentUser._id.toString()){
+    //
+    // }
+
   var visitedForm =
-  '<div id="formContainer" class="info-window">' +
-    '<h3> <%= destination.name %></h3>' +
-    '<div class="form-group">'+
-        '<strong>Location:</strong> <input id="googleRes" type="text" name="destination[name]" value="<%= destination.name %>"readonly></input>' +
-        '<strong>Position:</strong> <input id="googleRes" type="text" name="destination[position]" value="<%= destination.position %>" readonly></input>' +
-    '</div>' +
-    '<form action="/<%= user._id %>/<%= destination._id %>?_method=DELETE" method="POST">'+
-        '<div class="form-group">'+
-            '<button class="btn btn-xl btn-danger">Delete</button>' +
-        '</div>' +
-      '</form>' +
-  '</div>';
+    '<div id="formContainer" class="info-window">' +
+      '<h3> <%= destination.name %></h3>' +
+      '<div class="form-group">'+
+          '<strong>Location:</strong> <input id="googleRes" type="text" name="destination[name]" value="<%= destination.name %>"readonly></input>' +
+          '<strong>Position:</strong> <input id="googleRes" type="text" name="destination[position]" value="<%= destination.position %>" readonly></input>' +
+      '</div>' +
+      //TODO Add code to visitedForm. Need to stop showing delete button for visiting users
+      <%if(user._id.toString() === currentUser._id.toString()){%>
+        '<form action="/<%= user._id %>/<%= destination._id %>?_method=DELETE" method="POST">'+
+            '<div class="form-group">'+
+                '<button class="btn btn-xl btn-danger">Delete</button>' +
+            '</div>' +
+          '</form>' +
+      <%}%>
+    '</div>';
 
   infowindow = new google.maps.InfoWindow({
       maxWidth: 400,
@@ -71,16 +79,26 @@ function initMap(){
 //===================================================================================================
 var friendList = document.getElementById('friendList');
   <%user.friends.forEach(function(friend){%>
-      //define array to hold markers of specific friend
+      // array that contains all destination markers for each friend
       var arr<%=friend._id%> = [];
-      $("#friendList").append('<button id="friendID<%=friend._id%>" class="btn btn-default toggleFriend" type="submit"><%= friend.username %></button>');
+      //TODO INSTEAD OF friendbtn make it friendThumbnail so we can get btn and link to profile
+      var profileLink = '<div class="btn-group btn-group-justified" role="group" aria-label="">' +
+        '<div class="btn-group" role="group"><form action="/<%=friend._id%>">'+
+          '<button id="profileLink<%=friend._id%>" class="btn btn-primary homePageFriends" type="submit"><%= friend.firstName + " " + friend.lastName%></button>'+
+        '</form></div>';
+      var friendBtn = '<div class="btn-group" role="group">'+
+          '<button id="friendID<%=friend._id%>" class="btn btn-default btnmap" type="submit">'+
+            '<span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>'+
+        '</div>'+
+      '</div>';
+      // var friendBtn = '<button id="friendID<%=friend._id%>" class="btn btn-default toggleFriend" type="submit"><%= friend.username %></button>';
+      $("#friendList").append(profileLink+friendBtn);
       document.getElementById('friendID<%=friend._id%>').addEventListener("click", function(){
           $('#friendID<%=friend._id%>').toggleClass('active');
           //Check if markers are on page or not
           if($('#friendID<%=friend._id%>').hasClass('markerStatus')){
             //Remove from map
             //Set markers in array equal to null
-            console.log("arr<%=friend._id%>");
             for (var i = 0; i < arr<%=friend._id%>.length; i++ ) {
               arr<%=friend._id%>[i].setMap(null);
             }
@@ -89,8 +107,6 @@ var friendList = document.getElementById('friendList');
             //Add markers to map
             <%friend.destinations.forEach(function(destination){%>
               <%if(friend.destinations){%>
-                <%console.log("DESTINATION POSITION")%>
-                <%console.log(destination.position)%>
                 <%var positionStr = destination.position;%>
                 <%positionStr = positionStr.replace(/[()]/g, '');%>
                 <%var coordArr = positionStr.split(",");%>

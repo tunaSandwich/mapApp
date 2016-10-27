@@ -59,3 +59,9 @@ display: inline-block;
 .noPadding{
   padding: 0;
 }
+.homePageFriends{
+  margin: 5px;
+}
+.btnmap {
+  outline: 0;
+}

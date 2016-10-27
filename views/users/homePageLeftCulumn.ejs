@@ -1,0 +1,53 @@
+<div class="col-md-3">
+
+    <p class="lead"><%=user.username%></p>
+
+    <% if(currentUser !== undefined){ %>
+
+      <!-- Checks if a User is currently Logged in-->
+      <% if(user._id.toString() !== currentUser._id.toString()){%>
+          <%var userID = user._id;%>
+          <%var currentUserID = currentUser._id;%>
+
+      <!-- Function that checks whether a currentuser is already following user-->
+          <%function isFriend(allFriendArr){%>
+            <%var friends = false;%>
+            <%if(allFriendArr.length > 0){%>
+              <%for(var i=0 ; i< allFriendArr.length;i++){%>
+                <%if(allFriendArr[i].toString() === userID.toString()){%>
+                  <%friends = true;%>
+                <%}%>
+              <%}};%>
+              <%if(friends){%>
+                <!-- If User is already following then show Followed button -->
+                <form id="unfollowFriend" action="<%= currentUserID %>/unfollow/<%= userID %>?_method=DELETE" method="POST">
+                    <button class="btn btn-primary btn-block disabled form-control" >Unfollow</button>
+                </form>
+
+              <%} else{%>
+                <!-- Code that shows Add friend button -->
+                <!--  If User is not following then show Following button  -->
+                <form action="/<%=userID%>/addfriend" method="POST">
+                  <div class="form-group">
+                    <input class="btn btn-primary btn-block form-control" type="submit" value="Follow">
+                  </div>
+                </form>
+          <%}}%>
+          <!--  Calling function to check which button to show on page-->
+          <%isFriend(currentUser.friends);%>
+
+      <%} else { %>
+        <!--  IF THIS IS CURRENT USERS PAGE THEN SHOW ADD NEW LOCATION BUTTON-->
+        <a class="btn btn-success btn-block form-control" href="/<%= user._id %>/new">Add New Location</a>
+    <% }} %>
+
+
+    <div class="list-group">
+            <div class="caption">
+              <h3> Friends' Maps</h3>
+              <div id="friendList" class="btn-group" role="group" aria-label=""></div>
+              <!-- <ul id="friendList" class="list-group friendList"></ul> -->
+        </div>
+      </div>
+
+</div>

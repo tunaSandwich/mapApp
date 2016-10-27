@@ -50,7 +50,6 @@ router.get("/logout", function(req, res){
 
 //query search route
 router.post("/search", function(req, res){
-  //TODO figure out how to move search input value to GET route
   var searchInput = req.body.searchInput;
   res.redirect("/search/" + searchInput);
 });
