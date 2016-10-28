@@ -53,7 +53,7 @@ function initMap(){
       '</div>' +
       //TODO Add code to visitedForm. Need to stop showing delete button for visiting users
       <%if(user._id.toString() === currentUser._id.toString()){%>
-        '<form action="/<%= user._id %>/<%= destination._id %>?_method=DELETE" method="POST">'+
+        '<form action="/<%= user._id %>/delete/<%= destination._id %>?_method=DELETE" method="POST">'+
             '<div class="form-group">'+
                 '<button class="btn btn-xl btn-danger">Delete</button>' +
             '</div>' +
